@@ -32,7 +32,7 @@ public class Etal {
 			chaine.append("Le vendeur " + vendeur.getNom() + " quitte son étal, ");
 			int produitVendu = quantiteDebutMarche - quantite;
 			if (produitVendu > 0) {
-				chaine.append("il a vendu " + produitVendu + " parmi " + produit + ".\n");
+				chaine.append("il a vendu " + produitVendu + " parmi les " + produit + " qu il voulait vendre.\n");
 			} else {
 				chaine.append("il n'a malheureusement rien vendu.\n");
 			}
@@ -52,28 +52,41 @@ public class Etal {
 	}
 
 	public String acheterProduit(int quantiteAcheter, Gaulois acheteur) {
-		if (etalOccupe) {
-			StringBuilder chaine = new StringBuilder();
-			chaine.append(
-					acheteur.getNom() + " veut acheter " + quantiteAcheter + " " + produit + " à " + vendeur.getNom());
-			if (quantite == 0) {
-				chaine.append(", malheureusement il n'y en a plus !");
-				quantiteAcheter = 0;
+		StringBuilder chaine = new StringBuilder();
+		if (quantiteAcheter < 1) {
+			try {
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
 			}
-			if (quantiteAcheter > quantite) {
-				chaine.append(", comme il n'y en a plus que " + quantite + ", " + acheteur.getNom()
-						+ " vide l'étal de " + vendeur.getNom() + ".\n");
-				quantiteAcheter = quantite;
-				quantite = 0;
+		} else {
+
+			try {
+				chaine.append(acheteur.getNom() + " veut acheter " + quantiteAcheter + " " + produit + " à "
+						+ vendeur.getNom());
+				if (quantite == 0) {
+					chaine.append(", malheureusement il n'y en a plus !");
+					quantiteAcheter = 0;
+				}
+				if (quantiteAcheter > quantite) {
+					chaine.append(", comme il n'y en a plus que " + quantite + ", " + acheteur.getNom()
+							+ " vide l'étal de " + vendeur.getNom() + ".\n");
+					quantiteAcheter = quantite;
+					quantite = 0;
+				}
+				if (quantite != 0) {
+					quantite -= quantiteAcheter;
+					chaine.append(". " + acheteur.getNom() + ", est ravi de tout trouver sur l'étal de "
+							+ vendeur.getNom() + "\n");
+				}
+
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			} catch (IllegalStateException e2) {
+				e2.printStackTrace();
 			}
-			if (quantite != 0) {
-				quantite -= quantiteAcheter;
-				chaine.append(". " + acheteur.getNom() + ", est ravi de tout trouver sur l'étal de " + vendeur.getNom()
-						+ "\n");
-			}
-			return chaine.toString();
 		}
-		return null;
+		return chaine.toString();
+
 	}
 
 	public boolean contientProduit(String produit) {
