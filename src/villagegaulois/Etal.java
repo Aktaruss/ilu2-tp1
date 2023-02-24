@@ -51,13 +51,10 @@ public class Etal {
 		return "L'étal est libre";
 	}
 
-	public String acheterProduit(int quantiteAcheter, Gaulois acheteur) {
+	public String acheterProduit(int quantiteAcheter, Gaulois acheteur) throws IllegalArgumentException {
 		StringBuilder chaine = new StringBuilder();
 		if (quantiteAcheter < 1) {
-			try {
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			}
+			throw new IllegalArgumentException("La quantite " + quantiteAcheter + " est inferieur a 1.\n");
 		} else {
 
 			try {
