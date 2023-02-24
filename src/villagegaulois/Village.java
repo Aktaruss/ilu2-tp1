@@ -21,6 +21,9 @@ public class Village {
 
 		private Marche(int nbEtal) {
 			etals = new Etal[nbEtal];
+			for (int i = 0; i < etals.length; i++) {
+				etals[i] = new Etal();
+			}
 		}
 
 		private void utiliserEtal(int indiceEtal, Gaulois vendeur, String produit, int nbProduit) {
@@ -151,7 +154,7 @@ public class Village {
 		return chaine.toString();
 	}
 
-	public String rechercherVendeurProduit(String produit) {
+	public String rechercherVendeursProduit(String produit) {
 		StringBuilder chaine = new StringBuilder();
 		Etal[] etalproduit = marche.trouverEtal(produit);
 		chaine.append("Les vendeurs qui proposent des " + produit + " sont:\n");

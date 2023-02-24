@@ -51,37 +51,37 @@ public class Etal {
 		return "L'étal est libre";
 	}
 
-	public String acheterProduit(int quantiteAcheter, Gaulois acheteur) throws IllegalArgumentException {
+	public String acheterProduit(int quantiteAcheter, Gaulois acheteur) throws IllegalArgumentException,IllegalStateException {
 		StringBuilder chaine = new StringBuilder();
 		if (quantiteAcheter < 1) {
 			throw new IllegalArgumentException("La quantite " + quantiteAcheter + " est inferieur a 1.\n");
-		} else {
-
-			try {
-				chaine.append(acheteur.getNom() + " veut acheter " + quantiteAcheter + " " + produit + " à "
-						+ vendeur.getNom());
-				if (quantite == 0) {
-					chaine.append(", malheureusement il n'y en a plus !");
-					quantiteAcheter = 0;
-				}
-				if (quantiteAcheter > quantite) {
-					chaine.append(", comme il n'y en a plus que " + quantite + ", " + acheteur.getNom()
-							+ " vide l'étal de " + vendeur.getNom() + ".\n");
-					quantiteAcheter = quantite;
-					quantite = 0;
-				}
-				if (quantite != 0) {
-					quantite -= quantiteAcheter;
-					chaine.append(". " + acheteur.getNom() + ", est ravi de tout trouver sur l'étal de "
-							+ vendeur.getNom() + "\n");
-				}
-
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			} catch (IllegalStateException e2) {
-				e2.printStackTrace();
-			}
 		}
+		if (!isEtalOccupe()) {
+			throw new IllegalStateException("L etal n est pas occupe");
+		}
+		try {
+			chaine.append(
+					acheteur.getNom() + " veut acheter " + quantiteAcheter + " " + produit + " à " + vendeur.getNom());
+			if (quantite == 0) {
+				chaine.append(", malheureusement il n'y en a plus !");
+				quantiteAcheter = 0;
+			}
+			if (quantiteAcheter > quantite) {
+				chaine.append(", comme il n'y en a plus que " + quantite + ", " + acheteur.getNom()
+						+ " vide l'étal de " + vendeur.getNom() + ".\n");
+				quantiteAcheter = quantite;
+				quantite = 0;
+			}
+			if (quantite != 0) {
+				quantite -= quantiteAcheter;
+				chaine.append(". " + acheteur.getNom() + ", est ravi de tout trouver sur l'étal de " + vendeur.getNom()
+						+ "\n");
+			}
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+
 		return chaine.toString();
 
 	}

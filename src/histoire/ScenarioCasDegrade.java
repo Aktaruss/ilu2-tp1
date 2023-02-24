@@ -11,7 +11,14 @@ public class ScenarioCasDegrade {
 		Etal etal = new Etal();
 		Gaulois asterix = new Gaulois("Asterix",10);
 //		etal.libererEtal();
-		System.out.println(etal.acheterProduit(-1, asterix));
+		try {
+			System.out.println(etal.acheterProduit(2, asterix));
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
 		System.out.println("Fin du test");
 		}
 }
